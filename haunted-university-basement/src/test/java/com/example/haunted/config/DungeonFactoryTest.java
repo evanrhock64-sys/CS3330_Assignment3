@@ -52,7 +52,13 @@ class DungeonFactoryTest {
                 Arguments.of(List.of(e, e, n, e), "Dean Vault"),
                 Arguments.of(List.of(e, n, e), "Dean Vault"),
                 Arguments.of(List.of(e, n, e, n), "Final Chamber"),
-                Arguments.of(List.of(e, n, e, n, s), "Dean Vault"));
+                Arguments.of(List.of(e, n, e, n, s), "Dean Vault"),
+                // kills line 56: Exam Archive SOUTH -> Lecture Hall
+                Arguments.of(List.of(e, n, s), "Abandoned Lecture Hall"),
+                // kills line 59: Dean Vault WEST -> Exam Archive
+                Arguments.of(List.of(e, e, n, e, w), "Exam Archive"),
+                // kills line 60: Dean Vault SOUTH -> Server Closet
+                Arguments.of(List.of(e, n, e, s), "Server Closet"));
     }
 
     @ParameterizedTest(name = "{0} -> {1}")

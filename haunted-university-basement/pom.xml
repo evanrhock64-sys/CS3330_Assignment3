@@ -13,10 +13,11 @@
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <junit.version>6.0.3</junit.version>
+        <junit.version>5.13.4</junit.version>
     </properties>
 
     <dependencies>
+        <!-- This dependency provides JUnit 5 (Jupiter API, params, and engine) used to write and run the test suite. -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
@@ -27,6 +28,7 @@
 
     <build>
         <plugins>
+            <!-- This dependency (Surefire plugin) runs the JUnit tests during the Maven test phase. -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -35,10 +37,40 @@
                     <useModulePath>false</useModulePath>
                 </configuration>
             </plugin>
+            <!-- This dependency (Compiler plugin) compiles the main and test sources for Java 21. -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.11.0</version>
+            </plugin>
+            <!-- This dependency (Pitest Maven plugin) runs mutation testing and generates the mutation reports. -->
+            <plugin>
+                <groupId>org.pitest</groupId>
+                <artifactId>pitest-maven</artifactId>
+                <version>1.19.4</version>
+                <dependencies>
+                    <!-- This dependency lets Pitest discover and run JUnit 5 tests. -->
+                    <dependency>
+                        <groupId>org.pitest</groupId>
+                        <artifactId>pitest-junit5-plugin</artifactId>
+                        <version>1.2.3</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <targetClasses>
+                        <param>com.example.haunted.*</param>
+                    </targetClasses>
+                    <targetTests>
+                        <param>com.example.haunted.*Test</param>
+                    </targetTests>
+                    <outputFormats>
+                        <format>HTML</format>
+                        <format>XML</format>
+                        <format>CSV</format>
+                    </outputFormats>
+                    <timestampedReports>false</timestampedReports>
+                    <threads>4</threads>
+                </configuration>
             </plugin>
         </plugins>
     </build>
